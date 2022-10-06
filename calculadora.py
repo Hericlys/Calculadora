@@ -7,15 +7,18 @@ class Calculadora(QMainWindow):
         super().__init__(parent)
 
         self.setWindowTitle('Calculadora')
-        self.setFixedSize(300, 500)
+        self.setFixedSize(400, 400)
         self.cw = QWidget()
         self.grid = QGridLayout(self.cw)
 
         self.display = QLineEdit()
-        self.grid.addWidget(self.display, 0, 0, 1, 5)
+        self.grid.addWidget(self.display, 0, 0, 1, 4)
         self.display.setDisabled(True)
         self.setStyleSheet(
-            '* {background: #000; color: #FFF; font-size: 30px;}'
+            '* {background: #FFF; color: #FFF; font-size: 30px;}'
+        )
+        self.display.setStyleSheet(
+            'background: #000; color: #1693a5; font-size: 30px;'
         )
         self.display.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
 
@@ -23,13 +26,15 @@ class Calculadora(QMainWindow):
         self.add_btn(QPushButton(")"), 1, 1, 1, 1)
         self.add_btn(
             QPushButton("C"), 1, 2, 1, 1,
-            lambda: self.display.setText('')
+            lambda: self.display.setText(''),
+            "background: #9b4b54; font-size: 30px;"
         )
         self.add_btn(
             QPushButton("⌫"), 1, 3, 1, 1,
             lambda: self.display.setText(
                 self.display.text()[:-1]
-            )
+            ),
+            "background: #d5580d; font-size: 30px;"
         )
 
         self.add_btn(QPushButton("7"), 2, 0, 1, 1)
@@ -53,7 +58,7 @@ class Calculadora(QMainWindow):
         self.add_btn(
             QPushButton("="), 5, 3, 1, 1,
             self.eval_igual,
-            "background: #d5580d;"
+            "background: #b4df37; color: #000; font-size: 30px;"
         )
 
         self.setCentralWidget(self.cw)
@@ -63,14 +68,17 @@ class Calculadora(QMainWindow):
         if not funcao:
             btn.clicked.connect(
                 lambda: self.display.setText(
-                    self.display.text() + btn.text()
+                    (self.display.text() if self.display.text() != 'Conta invalida!' else '') + btn.text()
                 )
             )
         else:
             btn.clicked.connect(funcao)
         if style:
             btn.setStyleSheet(style)
-
+        else:
+            btn.setStyleSheet(
+                'background: #a1a6aa; color: #000; font-size: 30px;'
+            )
         btn.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
 
     def eval_igual(self):

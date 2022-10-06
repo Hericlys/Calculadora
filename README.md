@@ -1,2 +1,2 @@
 # Calculadora
-Calculadora funcional feita com python e usando o pyqr5
+Calculadora feita com python e usando o pyqr5
